@@ -2,12 +2,13 @@
 // import modules 
 const { create_event } = require("../helper_functions/create_event")
 const { push_event } = require("../helper_functions/push_events")
+const { delete_event } = require("../helper_functions/delete_event")
+const { gollum_event } = require("../helper_functions/gollum_event")
+const { pr_event } = require("../helper_functions/pr_event")
+const { pr_review_event } = require("../helper_functions/pr_review_event")
 const { Command } = require('commander');
+
 const program = new Command();
-
-
-
-
 
 program 
     .name("Github User Activity Tracker")
@@ -33,8 +34,20 @@ program
                     case "PushEvent":
                         push_event(event)
                         break
+                    case "DeleteEvent":
+                        delete_event(event)
+                        break
+                    case "GollumEvent":
+                        gollum_event(event)
+                        break
+                    case "PullRequestEvent":
+                        pr_event(event)
+                        break;
+                    case "PullRequestReviewEvent":
+                        pr_review_event(event)
+                        break
                     default :
-                        console.log(`This is a ${type} activity  `)
+                        console.log(`This is a ${type} activity in ${event.repo.name}`)
                         break
                     
                 }

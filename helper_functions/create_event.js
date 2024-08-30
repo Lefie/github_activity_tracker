@@ -1,5 +1,3 @@
-
-
 const create_event = (event) => {
     const repo = event.repo.name
     const ref_type = event.payload.ref_type
