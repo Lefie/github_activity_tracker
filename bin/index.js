@@ -6,6 +6,7 @@ const { delete_event } = require("../helper_functions/delete_event")
 const { gollum_event } = require("../helper_functions/gollum_event")
 const { pr_event } = require("../helper_functions/pr_event")
 const { pr_review_event } = require("../helper_functions/pr_review_event")
+const { issue_event } = require("../helper_functions/issue_event")
 const { Command } = require('commander');
 
 const program = new Command();
@@ -20,7 +21,6 @@ program
     .description("display the github activity of the github user ")
     .action( (username) => {
         const api_url = `https://api.github.com/users/${username}/events`
-        console.log("display github activity url", api_url)
 
         fetch(api_url, {})
         .then(resp => resp.json())
@@ -46,13 +46,14 @@ program
                     case "PullRequestReviewEvent":
                         pr_review_event(event)
                         break
+                    case "IssuesEvent":
+                        issue_event(event)
+                        break
                     default :
                         console.log(`This is a ${type} activity in ${event.repo.name}`)
                         break
-                    
                 }
-                
-                
+                          
             });
         })
         .catch(error => console.log(error))
