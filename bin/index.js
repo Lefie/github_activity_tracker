@@ -1,6 +1,7 @@
 #! /usr/bin/env node
 // import modules 
 const { create_event } = require("../helper_functions/create_event")
+const { push_event } = require("../helper_functions/push_events")
 const { Command } = require('commander');
 const program = new Command();
 
@@ -28,6 +29,9 @@ program
                 switch (type) {
                     case "CreateEvent":
                         create_event(event)
+                        break
+                    case "PushEvent":
+                        push_event(event)
                         break
                     default :
                         console.log(`This is a ${type} activity  `)
