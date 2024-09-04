@@ -9,6 +9,8 @@ const { pr_review_event } = require("../helper_functions/pr_review_event")
 const { issue_event } = require("../helper_functions/issue_event")
 const { issue_comment_event } = require("../helper_functions/issue_comment_event")
 const { pr_review_comment_event } = require("../helper_functions/pr_review_comment_event")
+const { member_event } = require("../helper_functions/member_event")
+const { watch_event } = require("../helper_functions/watch_event")
 const { Command } = require('commander');
 
 const program = new Command();
@@ -56,6 +58,12 @@ program
                         break
                     case "PullRequestReviewCommentEvent":
                         pr_review_comment_event(event)
+                        break
+                    case "MemberEvent":
+                        member_event(event)
+                        break
+                    case "WatchEvent":
+                        watch_event(event)
                         break
                     default :
                         console.log(`This is a ${type} in ${event.repo.name}`)
