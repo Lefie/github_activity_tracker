@@ -7,6 +7,8 @@ const { gollum_event } = require("../helper_functions/gollum_event")
 const { pr_event } = require("../helper_functions/pr_event")
 const { pr_review_event } = require("../helper_functions/pr_review_event")
 const { issue_event } = require("../helper_functions/issue_event")
+const { issue_comment_event } = require("../helper_functions/issue_comment_event")
+const { pr_review_comment_event } = require("../helper_functions/pr_review_comment_event")
 const { Command } = require('commander');
 
 const program = new Command();
@@ -49,11 +51,16 @@ program
                     case "IssuesEvent":
                         issue_event(event)
                         break
-                    default :
-                        console.log(`This is a ${type} activity in ${event.repo.name}`)
+                    case "IssueCommentEvent":
+                        issue_comment_event(event)
                         break
-                }
-                          
+                    case "PullRequestReviewCommentEvent":
+                        pr_review_comment_event(event)
+                        break
+                    default :
+                        console.log(`This is a ${type} in ${event.repo.name}`)
+                        break
+                }                        
             });
         })
         .catch(error => console.log(error))
@@ -64,33 +71,3 @@ program
    
 
 program.parse(process.argv)
-
-/*
- .action((username) => {
-        
-
-        fetch(api_url, {})
-        .then(response => response.json())
-        .then(data => {
-
-            data.forEach(event => {
-                const type = event.type
-                switch (type) {
-                    case "CreateEvent":
-                        const repo = data[0].repo.name
-                        const ref_type = data[0].payload.ref_type
-                        console.log(`created a ${ref_type} named ${repo}`)
-                        break
-                    default:
-                        console.log(`the type of event is ${type}`)
-
-                }
-            });
-            
-                    
-            }
-        )
-        .catch(error => console.log(error))
-    )
-
-*/
